@@ -1,7 +1,8 @@
-from fastapi import FastAPI,UploadFile
+from fastapi import BackgroundTasks, FastAPI,UploadFile
 from .models import AddDocRequest, QueryRequest
 from .rag import add_document, retrieve_similar_documents
 from .ingest import ingestfile
+from .batch_ingest import batch_ingest
 
 app = FastAPI()
 
