@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+lancedb
+python-dotenv
+openai>=1.3
+pydantic
+pdfplumber
+tiktoken
