@@ -1,4 +1,3 @@
-version: "3.9"
 
 services:
   rag-api:
@@ -10,7 +9,7 @@ services:
     volumes:
       - ./data:/app/data
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_KEY=${API_KEY}
     # 可选：限制 CPU/内存，更稳定
     # deploy:
     #   resources:

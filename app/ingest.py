@@ -35,7 +35,7 @@ def ingestfile(file:UploadFile):
     
     for chunk in chunks:
         embedding=get_embedding(chunk)
-        table.add([{"id":table.count()+1,"text":chunk,"embedding":embedding}])
+        table.add([{"id":table.count_rows()+1,"text":chunk,"embedding":embedding}])
     
     return {"status":"ok","chunks":len(chunks)}
 

@@ -25,6 +25,7 @@ def get_embedding(text: str):
     resp = requests.post(url, headers=headers, json=payload)
     resp.raise_for_status()
     data = resp.json()
+    print(data)
     # 返回向量
     return data["data"][0]["embedding"]
 
