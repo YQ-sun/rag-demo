@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+venv/
+ENV/
+env/
+
+# OS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# LanceDB data
+data/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Cache
+.cache/
