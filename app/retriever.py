@@ -4,6 +4,7 @@ import os
 from whoosh.fields import Schema, TEXT, ID
 from whoosh.index import create_in, exists_in, open_dir
 from whoosh.qparser import QueryParser
+import pandas as pd
 
 BM25_INDEX_DIR = "data/bm25_index"
 
@@ -17,6 +18,22 @@ def embedding_retriever(query: str, top_k: int = 5):
         {"text": row["text"], "score": float(row["_distance"])}
         for _, row in results.iterrows()
     ]
+
+def embedding_retriever_with_history(query:str,top_k:int=3, conversation_id:str=None):
+    query_embedding= get_embedding(query)
+    db= get_db()
+    docs= db.search(query_embedding).limit(top_k).to_pandas()
+
+    if conversation_id:
+        from .chat_manager import get_last_turns
+        last_turns= get_last_turns(conversation_id)
+        for turn in last_turns:
+            if turn['role'] == 'assistant':
+                # 把每条历史回答当作一条额外文档
+                docs = pd.concat([docs, pd.DataFrame([{"text": turn['content']}])], ignore_index=True)
+
+    return docs.head(top_k).to_dict(orient="records")
+
 
 def build_bm25_index():
     os.makedirs(BM25_INDEX_DIR, exist_ok=True)

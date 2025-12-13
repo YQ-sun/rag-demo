@@ -8,9 +8,6 @@ load_dotenv()
 OPENROUTER_KEY = os.getenv("API_KEY")
 OPENROUTER_URL = os.getenv("BASE_URL")        
 
-# -----------------------------
-# 1. 获取阿里云 Embedding
-# -----------------------------
 def get_embedding(text: str):
     url = f"{OPENROUTER_URL}/embeddings"
     headers = {
@@ -18,7 +15,7 @@ def get_embedding(text: str):
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "text-embedding-3-small",
+        "model": "openai/text-embedding-3-small",
         "input": text
     }
 
