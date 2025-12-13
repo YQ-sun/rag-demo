@@ -8,3 +8,6 @@ pdfplumber
 tiktoken
 python-multipart
 pandas
+whoosh
+jinja2
+
