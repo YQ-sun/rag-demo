@@ -1,0 +1,100 @@
+FastAPI 是一个用于构建高性能 Python Web API 的框架，基于 Starlette 和 Pydantic。
+
+FastAPI 原生支持异步、高性能和自动生成 OpenAPI 文档，Flask 更轻量但需手动扩展。
+
+使用 `pip install fastapi[all]` 安装 FastAPI 及依赖的 Uvicorn。
+
+FastAPI 本身不自带服务器，通常搭配 Uvicorn 或 Hypercorn。
+
+使用装饰器 `@app.get("/path")` 定义函数即可。
+
+使用 Pydantic 模型定义参数，例如 `def endpoint(item: Item)`。
+
+访问 `/docs`（Swagger UI）或 `/redoc`（ReDoc）即可。
+
+支持，使用 `async def` 定义接口即可。
+
+在路径中用 `{param}` 并在函数中声明同名参数，例如 `/items/{item_id}`。
+
+函数参数带默认值即可，例如 `def read_items(skip: int = 0, limit: int = 10)`。
+
+使用 `from fastapi import status`，然后在返回时指定 `status_code=status.HTTP_201_CREATED`。
+
+使用 `app.add_middleware(MiddlewareClass, **options)` 添加中间件。
+
+使用 `File` 和 `UploadFile` 类型，例如 `file: UploadFile = File(...)`。
+
+直接返回 dict，FastAPI 会自动转成 JSON。
+
+使用 `Form` 类型，例如 `username: str = Form(...)`。
+
+使用 `Depends` 装饰器，例如 `def endpoint(dep: DepType = Depends(get_dep))`。
+
+支持，可使用 `@app.websocket("/ws")` 装饰器定义。
+
+使用 `from fastapi.middleware.cors import CORSMiddleware` 添加中间件。
+
+函数参数使用 `Header` 类型，例如 `user_agent: str = Header(None)`。
+
+使用 `from fastapi import HTTPException`，然后 `raise HTTPException(status_code=404, detail="Not Found")`。
+
+使用 `response_model=ModelClass` 装饰器参数定义返回数据类型。
+
+使用 `Cookie` 类型参数，例如 `session_id: str = Cookie(None)`。
+
+支持，使用 `BackgroundTasks` 处理异步后台任务。
+
+使用 `APIRouter` 将接口按模块分组。
+
+使用 Pydantic 模型或类型注解，自动进行数据验证。
+
+支持，可使用 `fastapi.security` 模块进行 OAuth2 授权。
+
+使用装饰器 `@app.post("/path")` 定义函数。
+
+使用 `@app.exception_handler(ExceptionType)` 自定义处理逻辑。
+
+使用 `uvicorn main:app --reload` 启动开发服务器。
+
+支持，`Depends` 可以设置 `cache=True` 提高性能。
+
+使用 `FileResponse` 返回文件内容。
+
+使用 Pydantic 的 `Field(..., max_length=...)` 限制长度。
+
+使用 `TestClient` 进行单元测试。
+
+可以同时使用 Path、Query、Body、Header、Cookie 参数。
+
+支持，`Depends` 可以嵌套调用其他依赖。
+
+可以同时使用 `Form` 和 `File` 类型参数。
+
+设置 `allow_origins` 参数在 `CORSMiddleware` 中。
+
+使用 `Response` 对象，例如 `JSONResponse` 或 `PlainTextResponse`。
+
+支持，依赖函数也可以是 `async def`。
+
+使用 `app.add_exception_handler(Exception, handler)` 设置全局异常。
+
+可以，结合依赖注入管理数据库 session。
+
+支持，Pydantic 模型可嵌套其他模型。
+
+使用不同的 `APIRouter` 前缀区分版本，例如 `/v1/`、`/v2/`。
+
+使用 Query 参数如 `skip` 和 `limit` 实现分页。
+
+返回 `JSONResponse(content=data, status_code=201)`。
+
+可以，通过继承 Pydantic `BaseModel` 并自定义校验器。
+
+装饰器本身限制方法，例如 `@app.post(...)`。
+
+定义依赖函数获取用户信息，然后通过 `Depends(get_current_user)` 注入。
+
+支持，需要管理连接列表并循环发送消息。
+
+定义 Celery 任务并在 FastAPI 中调用，实现后台任务处理。
+

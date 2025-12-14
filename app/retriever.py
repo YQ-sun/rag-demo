@@ -1,3 +1,4 @@
+from typing import List
 from .rag import get_embedding
 from .db import get_db
 import os
@@ -5,10 +6,11 @@ from whoosh.fields import Schema, TEXT, ID
 from whoosh.index import create_in, exists_in, open_dir
 from whoosh.qparser import QueryParser
 import pandas as pd
+from .reranker import rerank_responses
 
 BM25_INDEX_DIR = "data/bm25_index"
 
-def embedding_retriever(query: str, top_k: int = 5):
+def embedding_retriever_initial(query: str, top_k: int = 5):
     db = get_db()
     query_embedding = get_embedding(query)
 
@@ -18,6 +20,18 @@ def embedding_retriever(query: str, top_k: int = 5):
         {"text": row["text"], "score": float(row["_distance"])}
         for _, row in results.iterrows()
     ]
+
+def embedding_retriever(query: str, top_k: int = 5,reranker_method:str |None=None) -> List[str]:
+    candidate_docs = embedding_retriever_initial(query, top_k=top_k*3)
+    if reranker_method:
+        ranked = rerank_responses(
+            user_query=query,
+            candidate_responses=candidate_docs,
+            method=reranker_method
+        )
+        return [doc for doc, score in ranked[:top_k]]
+    else:
+        return [doc["text"] for doc in candidate_docs[:top_k]]
 
 def embedding_retriever_with_history(query:str,top_k:int=3, conversation_id:str=None):
     query_embedding= get_embedding(query)
